@@ -2,6 +2,7 @@ import 'package:carbon_emissions/theme/colors.dart';
 import 'package:carbon_emissions/tutorial_screen.dart';
 import 'package:carbon_emissions/utils/route_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IntroductionScreen extends StatelessWidget {
   const IntroductionScreen({super.key});
@@ -10,14 +11,14 @@ class IntroductionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(62),
+        preferredSize: Size.fromHeight(62.h),
         child: AppBar(
           centerTitle: true,
           forceMaterialTransparency: true,
           title: Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child:
-                Image.asset('assets/images/logo.png', width: 161, height: 45),
+            padding: EdgeInsets.only(top: 24.h),
+            child: Image.asset('assets/images/logo.png',
+                width: 161.w, height: 45.h),
           ),
         ),
       ),
@@ -33,9 +34,9 @@ class IntroductionScreen extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 230),
+              padding: EdgeInsets.symmetric(horizontal: 230.w),
               child: Container(
-                padding: const EdgeInsets.all(50),
+                padding: EdgeInsets.all(50.r),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
@@ -44,30 +45,30 @@ class IntroductionScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'INTRODUCTION',
                       style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 32.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: 32,
+                    SizedBox(
+                      height: 32.h,
                     ),
-                    const Text(
+                    Text(
                       'WELCOME TO CARBON NEUTRAL SIMULATION FOR SCOPE OF 3 PRODUCTS. IN THIS SIMULATION, WE CHALLENGE YOU TO BE ABLE TO DESIGN A STRATEGY TO FORMULATE THE xEV RATIO OF PRODUCT SALES ALONG WITH ITS ENERGY SOURCES TO ACHIEVE THE TARGET OF ZERO EMISSIONS',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 32,
+                        fontSize: 32.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(
-                      height: 32,
+                    SizedBox(
+                      height: 32.h,
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          fixedSize: const Size(296, 85),
+                          fixedSize: Size(296.w, 85.h),
                           backgroundColor: AppColors.primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -77,11 +78,11 @@ class IntroductionScreen extends StatelessWidget {
                           Navigator.push(context,
                               RouteUtils().createRoute(const TutorialScreen()));
                         },
-                        child: const Text(
+                        child: Text(
                           'NEXT',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 32,
+                            fontSize: 32.sp,
                           ),
                         )),
                   ],

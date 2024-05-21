@@ -1,6 +1,7 @@
 import 'package:carbon_emissions/theme/colors.dart';
 import 'package:carbon_emissions/utils/route_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CalculatorScreen extends StatefulWidget {
@@ -11,31 +12,34 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
-  List<ChartData> chartData = List.generate(
+  List<Map<String, dynamic>> chartData = List.generate(
     27,
-    (i) => ChartData((24 + i).toString(), [
-      Data('ICE', (1000 * i).toDouble(), AppColors.iceColor),
-      Data('HEV', (2000 * i).toDouble(), AppColors.hevColor),
-      Data('PHEV', (3000 * i).toDouble(), AppColors.phevColor),
-      Data('BEV', (4000 * i).toDouble(), AppColors.bevColor),
-      Data('FCEV', (3000 * i).toDouble(), AppColors.fcevColor),
-      Data(
-          'MITIGATION', (1000 * (i * 3)).toDouble(), AppColors.mitigationColor),
-    ]),
+    (i) => {
+      'chart': ChartData((24 + i).toString(), [
+        Data('ICE', (1000 * i).toDouble(), AppColors.iceColor),
+        Data('HEV', (2000 * i).toDouble(), AppColors.hevColor),
+        Data('PHEV', (3000 * i).toDouble(), AppColors.phevColor),
+        Data('BEV', (4000 * i).toDouble(), AppColors.bevColor),
+        Data('FCEV', (3000 * i).toDouble(), AppColors.fcevColor),
+        Data('MITIGATION', (1000 * (i * 3)).toDouble(),
+            AppColors.mitigationColor),
+      ]),
+      'mitigation': 4000 * i,
+    },
   );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(62),
+        preferredSize: Size.fromHeight(62.h),
         child: AppBar(
           centerTitle: true,
           forceMaterialTransparency: true,
           title: Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child:
-                Image.asset('assets/images/logo.png', width: 161, height: 45),
+            padding: EdgeInsets.only(top: 24.h),
+            child: Image.asset('assets/images/logo.png',
+                width: 161.w, height: 45.h),
           ),
         ),
       ),
@@ -50,7 +54,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.r),
             child: Column(
               children: [
                 Row(
@@ -62,10 +66,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           color: Colors.white,
                         ),
                         child: SfCartesianChart(
-                          title: const ChartTitle(
+                          title: ChartTitle(
                             text: 'GOVERMENT REGULATION',
                             textStyle: TextStyle(
-                              fontSize: 24,
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -73,75 +77,81 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             interval: 1,
                             autoScrollingMode: AutoScrollingMode.end,
                           ),
-                          legend: const Legend(
+                          legend: Legend(
                             isVisible: true,
                             position: LegendPosition.bottom,
                             isResponsive: true,
                             textStyle: TextStyle(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                             ),
                             toggleSeriesVisibility: true,
                           ),
                           series: <CartesianSeries>[
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.iceColor,
                               legendItemText: 'ICE',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[0].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[0].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.hevColor,
                               legendItemText: 'HEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[1].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[1].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.phevColor,
                               legendItemText: 'PHEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[2].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[2].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.bevColor,
                               legendItemText: 'BEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[3].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[3].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.fcevColor,
                               legendItemText: 'FCEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[4].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[4].value,
                             ),
-                            LineSeries<ChartData, String>(
+                            LineSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.mitigationColor,
                               legendItemText: 'MITIGATION',
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[4].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  data['mitigation'],
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 24,
+                    SizedBox(
+                      width: 24.w,
                     ),
                     Flexible(
                       child: Container(
@@ -150,10 +160,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           color: Colors.white,
                         ),
                         child: SfCartesianChart(
-                          title: const ChartTitle(
+                          title: ChartTitle(
                             text: 'ZERO EMISSIONS',
                             textStyle: TextStyle(
-                              fontSize: 24,
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -161,76 +171,74 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             interval: 1,
                             autoScrollingMode: AutoScrollingMode.end,
                           ),
-                          legend: const Legend(
+                          legend: Legend(
                             isVisible: true,
                             position: LegendPosition.bottom,
                             isResponsive: true,
                             textStyle: TextStyle(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                             ),
                             toggleSeriesVisibility: true,
                           ),
                           series: <CartesianSeries>[
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.iceColor,
                               legendItemText: 'ICE',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[0].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[0].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.hevColor,
                               legendItemText: 'HEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[1].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[1].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.phevColor,
                               legendItemText: 'PHEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[2].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[2].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.bevColor,
                               legendItemText: 'BEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[3].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[3].value,
                             ),
-                            StackedColumnSeries<ChartData, String>(
+                            StackedColumnSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
                               color: AppColors.fcevColor,
                               legendItemText: 'FCEV',
                               legendIconType: LegendIconType.rectangle,
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[4].value,
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).dataset[4].value,
                             ),
-                            LineSeries<ChartData, String>(
+                            LineSeries<Map<String, dynamic>, String>(
                               dataSource: chartData,
-                              color: Colors.green,
-                              legendItemText: 'Ave TtW',
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[4].value,
-                            ),
-                            LineSeries<ChartData, String>(
-                              dataSource: chartData,
-                              color: AppColors.wtwColor,
-                              legendItemText: 'Ave WtW',
-                              xValueMapper: (ChartData data, _) => data.name,
-                              yValueMapper: (ChartData data, _) =>
-                                  data.dataset[5].value,
+                              color: AppColors.mitigationColor,
+                              legendItemText: 'MITIGATION',
+                              xValueMapper: (Map<String, dynamic> data, _) =>
+                                  (data['chart'] as ChartData).name,
+                              yValueMapper: (Map<String, dynamic> data, _) =>
+                                  data['mitigation'],
                             ),
                           ],
                         ),
@@ -241,17 +249,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                Text(
                   'PARAMETER SETUP',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 145),
-                  padding: const EdgeInsets.all(12),
+                  margin: EdgeInsets.symmetric(horizontal: 145.w),
+                  padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
@@ -263,19 +271,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     children: [
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'NRE Ratio Increasing\n(max 2.9%)',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -290,19 +298,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'Ethanol hancement per\nyear max (max 3.6%)',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -317,19 +325,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'Downtrend from 2025\n(max 3%)',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -340,14 +348,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               keyboardType: TextInputType.number,
                             ),
                           ),
-                          const SizedBox(
-                            height: 4,
+                          SizedBox(
+                            height: 4.h,
                           ),
-                          const Text(
+                          Text(
                             'ICE',
                             style: TextStyle(
                               color: AppColors.yellowColor,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           )
@@ -355,19 +363,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'Uptrend toward 2035\n',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -378,11 +386,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               keyboardType: TextInputType.number,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'HEV',
                             style: TextStyle(
                               color: AppColors.yellowColor,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           )
@@ -390,11 +398,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'Uptrend Untill 2050\n',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -402,7 +410,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             height: 8,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -413,11 +421,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               keyboardType: TextInputType.number,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'PHEV',
                             style: TextStyle(
                               color: AppColors.yellowColor,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           )
@@ -425,19 +433,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'Uptrend until 2050\n',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -448,11 +456,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               keyboardType: TextInputType.number,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'BEV',
                             style: TextStyle(
                               color: AppColors.yellowColor,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           )
@@ -460,19 +468,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       Column(
                         children: [
-                          const Text(
+                          Text(
                             'Market growth from\n2040',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68.w,
                             child: TextField(
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -483,12 +491,84 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               keyboardType: TextInputType.number,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'FCEV',
                             style: TextStyle(
                               color: AppColors.yellowColor,
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 145.w),
+                  padding: EdgeInsets.all(12.r),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                  ),
+                  width: double.infinity,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            'NRE Ratio Increasing\n(max 2.9%)',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          SizedBox(
+                            width: 150.w,
+                            child: Slider(
+                              allowedInteraction: SliderInteraction.tapAndSlide,
+                              activeColor: AppColors.phevColor,
+                              value: 0.8,
+                              semanticFormatterCallback: (val) {
+                                return '2';
+                              },
+                              onChanged: (val) {},
+                            ),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'Ethanol hancement per\nyear max (max 3.6%)',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          SizedBox(
+                            width: 68.w,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  suffixText: '%'),
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
                             ),
                           )
                         ],
@@ -498,7 +578,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(296, 85),
+                      fixedSize: Size(296.w, 85.h),
                       backgroundColor: AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -508,11 +588,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       Navigator.push(context,
                           RouteUtils().createRoute(const CalculatorScreen()));
                     },
-                    child: const Text(
+                    child: Text(
                       'CALCULATE',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 32,
+                        fontSize: 32.sp,
                       ),
                     )),
               ],

@@ -2,7 +2,7 @@ import 'package:carbon_emissions/introduction_screen.dart';
 import 'package:carbon_emissions/theme/colors.dart';
 import 'package:carbon_emissions/utils/route_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -19,40 +19,40 @@ class OnboardingScreen extends StatelessWidget {
               fit: BoxFit.cover),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(35),
+          padding: EdgeInsets.all(32.r),
           child: Column(
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                width: 161,
-                height: 45,
+                width: 162.h,
+                height: 46.h,
               ),
               const Spacer(),
               Column(
                 children: [
-                  const Text(
+                  Text(
                     'WELCOME TO',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 40,
+                      fontSize: 40.sp,
                     ),
                   ),
-                  const SizedBox(
-                    height: 24,
+                  SizedBox(
+                    height: 24.h,
                   ),
-                  const Text(
+                  Text(
                     'CARCULATOR CARBON NETURAL',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 64,
+                      fontSize: 64.sp,
                     ),
                   ),
-                  const SizedBox(
-                    height: 24,
+                  SizedBox(
+                    height: 24.h,
                   ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(645, 85),
+                        fixedSize: Size(645.w, 85.h),
                         backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -64,11 +64,11 @@ class OnboardingScreen extends StatelessWidget {
                             RouteUtils()
                                 .createRoute(const IntroductionScreen()));
                       },
-                      child: const Text(
+                      child: Text(
                         'START',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 32,
+                          fontSize: 32.sp,
                         ),
                       )),
                 ],
