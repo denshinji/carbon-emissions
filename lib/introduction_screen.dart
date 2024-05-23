@@ -56,7 +56,7 @@ class IntroductionScreen extends StatelessWidget {
                       height: 32.h,
                     ),
                     Text(
-                      'WELCOME TO CARBON NEUTRAL SIMULATION FOR SCOPE OF 3 PRODUCTS. IN THIS SIMULATION, WE CHALLENGE YOU TO BE ABLE TO DESIGN A STRATEGY TO FORMULATE THE xEV RATIO OF PRODUCT SALES ALONG WITH ITS ENERGY SOURCES TO ACHIEVE THE TARGET OF ZERO EMISSIONS',
+                      'Welcome to CN Scope-3 Product Simulation\n\nWe challange you to achieve CN target by simulating xEV product ratio as combined with eco-friendly energy in the future.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 32.sp,

@@ -53,7 +53,7 @@ class TutorialScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'INTRODUCTION',
+                                'GAME RULES',
                                 style: TextStyle(
                                   fontSize: 32.sp,
                                   fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class TutorialScreen extends StatelessWidget {
                                 height: 16.h,
                               ),
                               Text(
-                                'INPUT YOUR SALES RATIO xEV PLAN BY COMBINED WITH MORE ECO-FRIENDLY ENERGY SOURCES',
+                                'Input xEV product ratio and eco-friendly energy as your plan',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 24.sp,
