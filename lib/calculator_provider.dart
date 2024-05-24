@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:carbon_emissions/utils/double_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -37,65 +40,7 @@ class CalculatorProvider extends ChangeNotifier {
   double? phev;
   double? bev;
   double? fcev;
-  List<int> phveDef = [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15
-  ];
 
-  List<int> fcevDef = [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-  ];
   List<double> defaultValues = [
     408985.0,
     423335.0,
@@ -169,8 +114,8 @@ class CalculatorProvider extends ChangeNotifier {
 
   Future<bool> calculate() async {
     calculateTableData.clear();
-    double tempPhve = ((phveDef[0] / 100));
-    double tempFcev = ((fcevDef[0] / 100));
+    double tempPhve = ((0 / 100));
+    double tempFcev = ((0 / 100));
     double tempIce = iceSlider ?? 0;
     double tempHve = hveSlider ?? 0;
     double tempBve = 0;
@@ -233,11 +178,16 @@ class CalculatorProvider extends ChangeNotifier {
       starYear = starYear + 1;
 
       if (i != 0) {
-        tempPhve = ((phveDef[i] / 100));
-        tempFcev = ((fcevDef[i] / 100));
+        if (i < 17) {
+          tempFcev = 0;
+        } else {
+          tempFcev = tempFcev + ((fcev ?? 0) / 100);
+        }
         if (i < 12) {
+          tempPhve = 0;
           tempHve = double.parse((tempHve + (hev ?? 0)).toStringAsFixed(5));
         } else {
+          tempPhve = (tempPhve + ((phev ?? 0) / 100));
           tempHve = double.parse((tempHve - (hev ?? 0)).toStringAsFixed(5));
         }
         tempIce = double.parse((tempIce - (ice ?? 0)).toStringAsFixed(5));
@@ -318,6 +268,8 @@ class CalculatorProvider extends ChangeNotifier {
         'aveWTW': aveWtW,
       });
     }
+
+    log(jsonEncode(calculateTableData));
 
     notifyListeners();
 

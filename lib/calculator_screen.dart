@@ -25,6 +25,20 @@ class _CalculatorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<CalculatorProvider>();
+    print(((vm.iceSlider ?? 0) +
+                (vm.hveSlider ?? 0) +
+                (vm.phveSlider ?? 0) +
+                (vm.bevSlider ?? 0) +
+                (vm.fcevSlider ?? 0) -
+                1) ==
+            0
+        ? 1
+        : ((vm.iceSlider ?? 0) +
+            (vm.hveSlider ?? 0) +
+            (vm.phveSlider ?? 0) +
+            (vm.bevSlider ?? 0) +
+            (vm.fcevSlider ?? 0) -
+            1));
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(62.h),
@@ -74,6 +88,7 @@ class _CalculatorScreen extends StatelessWidget {
                                 enablePinching: true,
                                 enableDoubleTapZooming: true,
                                 enablePanning: true,
+                                enableMouseWheelZooming: true,
                                 enableSelectionZooming: true),
                             primaryXAxis: const CategoryAxis(),
                             primaryYAxis: const NumericAxis(
@@ -119,7 +134,7 @@ class _CalculatorScreen extends StatelessWidget {
                                 xValueMapper: (Map<String, dynamic> data, _) =>
                                     data['year'].toString(),
                                 yValueMapper: (Map<String, dynamic> data, _) =>
-                                    data['phev'],
+                                    data['phve'],
                               ),
                               StackedColumnSeries<Map<String, dynamic>, String>(
                                 dataSource: vm.calculateTableData,
@@ -149,26 +164,6 @@ class _CalculatorScreen extends StatelessWidget {
                                     data['year'].toString(),
                                 yValueMapper: (Map<String, dynamic> data, _) {
                                   return data['mitigation'];
-                                },
-                              ),
-                              LineSeries<Map<String, dynamic>, String>(
-                                dataSource: vm.calculateTableData,
-                                color: Colors.blue[900],
-                                legendItemText: 'BaU',
-                                xValueMapper: (Map<String, dynamic> data, _) =>
-                                    data['year'].toString(),
-                                yValueMapper: (Map<String, dynamic> data, _) {
-                                  return data['bau'];
-                                },
-                              ),
-                              LineSeries<Map<String, dynamic>, String>(
-                                dataSource: vm.calculateTableData,
-                                color: Colors.red[900],
-                                legendItemText: 'CarbonCap (31.89%)',
-                                xValueMapper: (Map<String, dynamic> data, _) =>
-                                    data['year'].toString(),
-                                yValueMapper: (Map<String, dynamic> data, _) {
-                                  return data['carbonCap'];
                                 },
                               ),
                             ],
@@ -242,7 +237,7 @@ class _CalculatorScreen extends StatelessWidget {
                                 xValueMapper: (Map<String, dynamic> data, _) =>
                                     data['year'].toString(),
                                 yValueMapper: (Map<String, dynamic> data, _) =>
-                                    data['phev'],
+                                    data['phve'],
                               ),
                               StackedColumnSeries<Map<String, dynamic>, String>(
                                 dataSource: vm.calculateTableData,
@@ -396,7 +391,7 @@ class _CalculatorScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'Downtrend from 2025\n(max 3.4%)',
+                              'Downtrend from 2025\n',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
@@ -412,7 +407,6 @@ class _CalculatorScreen extends StatelessWidget {
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'^(\d+)?\.?\d{0,2}')),
-                                  MaxValueInputFormatter(3.4),
                                 ],
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -443,7 +437,7 @@ class _CalculatorScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'Uptrend toward 2035\n',
+                              'Uptrend until 2050\n',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
@@ -482,7 +476,7 @@ class _CalculatorScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'Uptrend Untill 2050\n',
+                              'Uptrend untill 2050\n',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
@@ -560,7 +554,7 @@ class _CalculatorScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'Market growth from\n2040',
+                              'Uptrend until\n2050',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
