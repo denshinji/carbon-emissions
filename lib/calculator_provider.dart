@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:carbon_emissions/utils/double_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -25,21 +22,21 @@ enum ParameterSetupType {
 }
 
 class CalculatorProvider extends ChangeNotifier {
-  double iceSlider = 0.87;
-  double hveSlider = 0.13;
-  double phveSlider = 0.0;
-  double bevSlider = 0.0;
-  double fcevSlider = 0.0;
-  double nreSlider = 0.23;
-  double ethanolSlider = 0.05;
+  double? iceSlider = 0;
+  double? hveSlider = 0;
+  double? phveSlider = 0;
+  double? bevSlider = 0;
+  double? fcevSlider = 0;
+  double? nreSlider = 0;
+  double? ethanolSlider = 0;
 
-  double nre = 2.9;
-  double ethanol = 3.6;
-  double ice = 3.35;
-  double hev = 1;
-  double phev = 1;
-  double bev = 1;
-  double fcev = 1;
+  double? nre;
+  double? ethanol;
+  double? ice;
+  double? hev;
+  double? phev;
+  double? bev;
+  double? fcev;
   List<int> phveDef = [
     0,
     0,
@@ -170,17 +167,17 @@ class CalculatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void calculate() {
+  Future<bool> calculate() async {
     calculateTableData.clear();
     double tempPhve = ((phveDef[0] / 100));
     double tempFcev = ((fcevDef[0] / 100));
-    double tempIce = iceSlider;
-    double tempHve = hveSlider;
+    double tempIce = iceSlider ?? 0;
+    double tempHve = hveSlider ?? 0;
     double tempBve = 0;
-    double tempNreMix = nreSlider;
-    double tempBioFuel = ethanolSlider;
-    double tempIceHev = 1 - ethanolSlider;
-    double tempBecPhev = 1 - nreSlider;
+    double tempNreMix = nreSlider ?? 0;
+    double tempBioFuel = ethanolSlider ?? 0;
+    double tempIceHev = 1 - (ethanolSlider ?? 0);
+    double tempBecPhev = 1 - (nreSlider ?? 0);
 
     double tempEgEfficientcy = 1;
     double tempAveTTWIce = consAveIceTtW * tempIceHev * tempEgEfficientcy;
@@ -199,7 +196,7 @@ class CalculatorProvider extends ChangeNotifier {
     double tempAveWtWAverage = 225;
 
     double tempMitigation = (((tempAveWtWIce * (tempIce * defaultValues[0])) +
-                (tempAveWtWHev * (hveSlider * defaultValues[0])) +
+                (tempAveWtWHev * ((hveSlider ?? 0) * defaultValues[0])) +
                 (tempAveWtWPhev * (tempPhve * defaultValues[0])) +
                 (tempAveWtWBEV * (tempBve * defaultValues[0])) +
                 (tempAveWtWFCEV * (tempFcev * defaultValues[0]))) *
@@ -210,13 +207,13 @@ class CalculatorProvider extends ChangeNotifier {
     double tempCarbonCap = (1 - 0.3189) * tempBaU;
 
     double tempTTWEmissions = ((tempAveTTWIce * (tempIce * defaultValues[0])) +
-        (tempAveTTWHev * (hveSlider * defaultValues[0])) +
+        (tempAveTTWHev * ((hveSlider ?? 0) * defaultValues[0])) +
         (tempAveTTWPhev * (tempPhve * defaultValues[0])) +
         (tempAveTTWBEV * (tempBve * defaultValues[0])) +
         (tempAveTTWFCEV * (tempFcev * defaultValues[0])));
 
     double tempWtWEmissions = ((tempAveWtWIce * (tempIce * defaultValues[0])) +
-        (tempAveWtWHev * (hveSlider * defaultValues[0])) +
+        (tempAveWtWHev * ((hveSlider ?? 0) * defaultValues[0])) +
         (tempAveWtWPhev * 0) +
         (tempAveWtWBEV * 0) +
         (tempAveWtWFCEV * 0));
@@ -239,11 +236,11 @@ class CalculatorProvider extends ChangeNotifier {
         tempPhve = ((phveDef[i] / 100));
         tempFcev = ((fcevDef[i] / 100));
         if (i < 12) {
-          tempHve = double.parse((tempHve + hev).toStringAsFixed(5));
+          tempHve = double.parse((tempHve + (hev ?? 0)).toStringAsFixed(5));
         } else {
-          tempHve = double.parse((tempHve - hev).toStringAsFixed(5));
+          tempHve = double.parse((tempHve - (hev ?? 0)).toStringAsFixed(5));
         }
-        tempIce = double.parse((tempIce - ice).toStringAsFixed(5));
+        tempIce = double.parse((tempIce - (ice ?? 0)).toStringAsFixed(5));
         tempBve = double.parse(
             (1 - tempIce - tempHve - tempPhve - tempFcev).toStringAsFixed(5));
       }
@@ -255,8 +252,8 @@ class CalculatorProvider extends ChangeNotifier {
       tempResultBev = (tempBve * defaultValues[i]);
 
       if (i != 0) {
-        tempNreMix = tempNreMix + nre;
-        tempBioFuel = tempBioFuel + ethanol;
+        tempNreMix = tempNreMix + (nre ?? 0);
+        tempBioFuel = tempBioFuel + (ethanol ?? 0);
 
         tempIceHev = 1 - tempBioFuel;
 
@@ -306,6 +303,7 @@ class CalculatorProvider extends ChangeNotifier {
 
         aveWtW = tempWtWEmissions / defaultValues[i];
       }
+
       calculateTableData.add({
         'year': starYear,
         'ice': tempResultIce.notNegative,
@@ -322,6 +320,15 @@ class CalculatorProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+
+    if (calculateTableData[6]['aveWTW'] < 107 &&
+        calculateTableData[6]['aveTTW'] < 119 &&
+        calculateTableData[0]['mitigation'] >=
+            calculateTableData.last['mitigation']) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void setParameter(ParameterSetupType type, double val) {

@@ -65,7 +65,7 @@ class LoadingDialog extends StatelessWidget {
         margin: margin,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: AppColors.primaryColor,
+          color: Colors.white,
         ),
         width: width ?? 200,
         height: 150,
