@@ -25,20 +25,6 @@ class _CalculatorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<CalculatorProvider>();
-    print(((vm.iceSlider ?? 0) +
-                (vm.hveSlider ?? 0) +
-                (vm.phveSlider ?? 0) +
-                (vm.bevSlider ?? 0) +
-                (vm.fcevSlider ?? 0) -
-                1) ==
-            0
-        ? 1
-        : ((vm.iceSlider ?? 0) +
-            (vm.hveSlider ?? 0) +
-            (vm.phveSlider ?? 0) +
-            (vm.bevSlider ?? 0) +
-            (vm.fcevSlider ?? 0) -
-            1));
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(62.h),
@@ -84,6 +70,15 @@ class _CalculatorScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            axes: const <ChartAxis>[
+                              NumericAxis(
+                                // numberFormat: NumberFormat.compact(),
+                                majorGridLines: MajorGridLines(width: 0),
+                                opposedPosition: true,
+                                name: 'yAxis1',
+                                enableAutoIntervalOnZooming: true,
+                              )
+                            ],
                             zoomPanBehavior: ZoomPanBehavior(
                                 enablePinching: true,
                                 enableDoubleTapZooming: true,
@@ -159,6 +154,7 @@ class _CalculatorScreen extends StatelessWidget {
                               LineSeries<Map<String, dynamic>, String>(
                                 dataSource: vm.calculateTableData,
                                 color: Colors.green[900],
+                                yAxisName: 'yAxis1',
                                 legendItemText: 'Mitigation',
                                 xValueMapper: (Map<String, dynamic> data, _) =>
                                     data['year'].toString(),
@@ -187,6 +183,15 @@ class _CalculatorScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            axes: const <ChartAxis>[
+                              NumericAxis(
+                                // numberFormat: NumberFormat.compact(),
+                                majorGridLines: MajorGridLines(width: 0),
+                                opposedPosition: true,
+                                name: 'yAxis1',
+                                enableAutoIntervalOnZooming: true,
+                              )
+                            ],
                             zoomPanBehavior: ZoomPanBehavior(
                                 enablePinching: true,
                                 enableDoubleTapZooming: true,
@@ -263,6 +268,7 @@ class _CalculatorScreen extends StatelessWidget {
                                 dataSource: vm.calculateTableData,
                                 color: Colors.green[900],
                                 legendItemText: 'Ave TtW',
+                                yAxisName: 'yAxis1',
                                 xValueMapper: (Map<String, dynamic> data, _) =>
                                     data['year'].toString(),
                                 yValueMapper: (Map<String, dynamic> data, _) {
@@ -273,6 +279,7 @@ class _CalculatorScreen extends StatelessWidget {
                                 dataSource: vm.calculateTableData,
                                 color: Colors.blue[900],
                                 legendItemText: 'Ave WtW',
+                                yAxisName: 'yAxis1',
                                 xValueMapper: (Map<String, dynamic> data, _) =>
                                     data['year'].toString(),
                                 yValueMapper: (Map<String, dynamic> data, _) {
@@ -616,7 +623,8 @@ class _CalculatorScreen extends StatelessWidget {
                     width: double.infinity,
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.start,
-                      alignment: WrapAlignment.spaceBetween,
+                      runAlignment: WrapAlignment.start,
+                      alignment: WrapAlignment.spaceAround,
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.min,
@@ -630,7 +638,7 @@ class _CalculatorScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 150.w,
+                              width: 120.w,
                               child: Slider(
                                 allowedInteraction:
                                     SliderInteraction.tapAndSlide,
@@ -639,9 +647,17 @@ class _CalculatorScreen extends StatelessWidget {
                                 max: 1,
                                 divisions: 100,
                                 onChanged: (_) {
-                                  context
-                                      .read<CalculatorProvider>()
-                                      .setSlider(SliderType.ice, _);
+                                  if (vm.totalSlider < 1 &&
+                                      vm.totalSlider >= 0) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.ice, _);
+                                  } else if (vm.totalSlider >= 1 &&
+                                      _ <= (vm.iceSlider ?? 0)) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.ice, _);
+                                  }
                                 },
                                 value: vm.iceSlider ?? 0,
                               ),
@@ -663,7 +679,7 @@ class _CalculatorScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'HVE',
+                              'HEV',
                               style: TextStyle(
                                 color: AppColors.phevColor,
                                 fontWeight: FontWeight.w700,
@@ -671,7 +687,7 @@ class _CalculatorScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 150.w,
+                              width: 120.w,
                               child: Slider(
                                 allowedInteraction:
                                     SliderInteraction.tapAndSlide,
@@ -680,9 +696,17 @@ class _CalculatorScreen extends StatelessWidget {
                                 max: 1,
                                 divisions: 100,
                                 onChanged: (_) {
-                                  context
-                                      .read<CalculatorProvider>()
-                                      .setSlider(SliderType.hve, _);
+                                  if (vm.totalSlider < 1 &&
+                                      vm.totalSlider >= 0) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.hve, _);
+                                  } else if (vm.totalSlider >= 1 &&
+                                      _ <= (vm.hveSlider ?? 0)) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.hve, _);
+                                  }
                                 },
                                 value: vm.hveSlider ?? 0,
                               ),
@@ -712,7 +736,7 @@ class _CalculatorScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 150.w,
+                              width: 120.w,
                               child: Slider(
                                 allowedInteraction:
                                     SliderInteraction.tapAndSlide,
@@ -721,9 +745,17 @@ class _CalculatorScreen extends StatelessWidget {
                                 max: 1,
                                 divisions: 100,
                                 onChanged: (_) {
-                                  context
-                                      .read<CalculatorProvider>()
-                                      .setSlider(SliderType.phve, _);
+                                  if (vm.totalSlider < 1 &&
+                                      vm.totalSlider >= 0) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.phve, _);
+                                  } else if (vm.totalSlider >= 1 &&
+                                      _ <= (vm.phveSlider ?? 0)) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.phve, _);
+                                  }
                                 },
                                 value: vm.phveSlider ?? 0,
                               ),
@@ -753,7 +785,7 @@ class _CalculatorScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 150.w,
+                              width: 120.w,
                               child: Slider(
                                 allowedInteraction:
                                     SliderInteraction.tapAndSlide,
@@ -762,9 +794,17 @@ class _CalculatorScreen extends StatelessWidget {
                                 max: 1,
                                 divisions: 100,
                                 onChanged: (_) {
-                                  context
-                                      .read<CalculatorProvider>()
-                                      .setSlider(SliderType.bev, _);
+                                  if (vm.totalSlider < 1 &&
+                                      vm.totalSlider >= 0) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.bev, _);
+                                  } else if (vm.totalSlider >= 1 &&
+                                      _ <= (vm.bevSlider ?? 0)) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.bev, _);
+                                  }
                                 },
                                 value: vm.bevSlider ?? 0,
                               ),
@@ -794,7 +834,7 @@ class _CalculatorScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 150.w,
+                              width: 120.w,
                               child: Slider(
                                 allowedInteraction:
                                     SliderInteraction.tapAndSlide,
@@ -803,9 +843,17 @@ class _CalculatorScreen extends StatelessWidget {
                                 max: 1,
                                 divisions: 100,
                                 onChanged: (_) {
-                                  context
-                                      .read<CalculatorProvider>()
-                                      .setSlider(SliderType.fcev, _);
+                                  if (vm.totalSlider < 1 &&
+                                      vm.totalSlider >= 0) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.fcev, _);
+                                  } else if (vm.totalSlider >= 1 &&
+                                      _ <= (vm.fcevSlider ?? 0)) {
+                                    context
+                                        .read<CalculatorProvider>()
+                                        .setSlider(SliderType.fcev, _);
+                                  }
                                 },
                                 value: vm.fcevSlider ?? 0,
                               ),
@@ -829,6 +877,14 @@ class _CalculatorScreen extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Text(
+                        'HOW TO WIN :\n1.Average Tank to Wheel : 119 gr/km @2030.\n2.Average Well to Wheel : 107 gr/km @2030.\n3.Annual emission flat from 2030 onward',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -852,7 +908,7 @@ class _CalculatorScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 SizedBox(
-                                  width: 150.w,
+                                  width: 120.w,
                                   child: Slider(
                                     allowedInteraction:
                                         SliderInteraction.tapAndSlide,
@@ -904,7 +960,7 @@ class _CalculatorScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 SizedBox(
-                                  width: 150.w,
+                                  width: 120.w,
                                   child: Slider(
                                     allowedInteraction:
                                         SliderInteraction.tapAndSlide,

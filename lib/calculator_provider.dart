@@ -41,6 +41,68 @@ class CalculatorProvider extends ChangeNotifier {
   double? bev;
   double? fcev;
 
+  double totalSlider = 0;
+
+  List<int> phveDef = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ];
+
+  List<int> fcevDef = [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+  ];
+
   List<double> defaultValues = [
     408985.0,
     423335.0,
@@ -109,13 +171,19 @@ class CalculatorProvider extends ChangeNotifier {
         ethanolSlider = distance;
         break;
     }
+    totalSlider = ((iceSlider ?? 0) +
+        (hveSlider ?? 0) +
+        (phveSlider ?? 0) +
+        (bevSlider ?? 0) +
+        (fcevSlider ?? 0));
+
     notifyListeners();
   }
 
   Future<bool> calculate() async {
     calculateTableData.clear();
-    double tempPhve = ((0 / 100));
-    double tempFcev = ((0 / 100));
+    double tempPhve = 0;
+    double tempFcev = 0;
     double tempIce = iceSlider ?? 0;
     double tempHve = hveSlider ?? 0;
     double tempBve = 0;
@@ -181,13 +249,14 @@ class CalculatorProvider extends ChangeNotifier {
         if (i < 17) {
           tempFcev = 0;
         } else {
-          tempFcev = tempFcev + ((fcev ?? 0) / 100);
+          tempFcev = (tempFcev + (fcev ?? 0));
         }
+
         if (i < 12) {
           tempPhve = 0;
           tempHve = double.parse((tempHve + (hev ?? 0)).toStringAsFixed(5));
         } else {
-          tempPhve = (tempPhve + ((phev ?? 0) / 100));
+          tempPhve = (tempPhve + (phev ?? 0));
           tempHve = double.parse((tempHve - (hev ?? 0)).toStringAsFixed(5));
         }
         tempIce = double.parse((tempIce - (ice ?? 0)).toStringAsFixed(5));

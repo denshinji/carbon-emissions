@@ -1,3 +1,4 @@
+import 'package:carbon_emissions/calculator_screen.dart';
 import 'package:carbon_emissions/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,6 @@ class MyApp extends StatelessWidget {
       designSize: const Size(1440, 1024),
       minTextAdapt: true,
       splitScreenMode: true,
-      // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return MaterialApp(
           title: 'Carbon Emissions',
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const OnboardingScreen(),
+      child: const CalculatorScreen(),
     );
   }
 }

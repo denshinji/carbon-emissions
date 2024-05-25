@@ -77,7 +77,7 @@ class TutorialScreen extends StatelessWidget {
                           width: 24.h,
                         ),
                         Image.asset(
-                          'assets/images/game_rules.png',
+                          'assets/images/game_rules.jpeg',
                           width: 490.w,
                           height: 210.h,
                         ),
@@ -116,7 +116,7 @@ class TutorialScreen extends StatelessWidget {
                                 height: 16.h,
                               ),
                               Text(
-                                'IF YOU ABLE TO ACHIEVE CARBON NEUTRAL TARGET :\n1.Average Tank to Wheel : 119 gr/km @2030.\n2.Average Well to Wheel : 107 gr/km @2030.\n3.Annual emission flat from 2030 onward',
+                                'IF YOU ABLE TO ARCHIVE CARBON NEUTRAL TARGET :\n1.Average Tank to Wheel : 119 gr/km @2030.\n2.Average Well to Wheel : 107 gr/km @2030.\n3.Annual emission flat from 2030 onward',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 24.sp,
@@ -130,7 +130,7 @@ class TutorialScreen extends StatelessWidget {
                           width: 24.w,
                         ),
                         Image.asset(
-                          'assets/images/chart_rules.png',
+                          'assets/images/chart_rules.jpeg',
                           width: 490.w,
                           height: 210.h,
                         ),
