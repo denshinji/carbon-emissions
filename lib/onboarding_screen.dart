@@ -41,7 +41,7 @@ class OnboardingScreen extends StatelessWidget {
                     height: 24.h,
                   ),
                   Text(
-                    'CARCULATOR CARBON NEUTRAL',
+                    'CALCULATOR CARBON NEUTRAL',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 64.sp,

@@ -56,7 +56,7 @@ class IntroductionScreen extends StatelessWidget {
                       height: 32.h,
                     ),
                     Text(
-                      'Welcome to CN Scope-3 Product Simulation\n\nWe challange you to achieve CN target by simulating xEV product ratio as combined with eco-friendly energy in the future.',
+                      'Welcome to CN Scope-3 Product Simulation\n\nWe challenge you to achieve CN target by simulating xEV product ratio as combined with eco-friendly energy in the future.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 32.sp,

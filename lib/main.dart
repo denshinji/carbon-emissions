@@ -1,4 +1,3 @@
-import 'package:carbon_emissions/calculator_screen.dart';
 import 'package:carbon_emissions/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const CalculatorScreen(),
+      child: const OnboardingScreen(),
     );
   }
 }

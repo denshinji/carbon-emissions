@@ -330,11 +330,11 @@ class CalculatorProvider extends ChangeNotifier {
         'phve': tempResultPhev.notNegative,
         'fcev': tempResultFcev.notNegative,
         'bev': tempResultBev.notNegative,
-        'mitigation': tempMitigation,
-        'bau': tempBaU,
-        'carbonCap': tempCarbonCap,
-        'aveTTW': aveTTW,
-        'aveWTW': aveWtW,
+        'mitigation': tempMitigation.notNegative,
+        'bau': tempBaU.notNegative,
+        'carbonCap': tempCarbonCap.notNegative,
+        'aveTTW': aveTTW.notNegative,
+        'aveWTW': aveWtW.notNegative,
       });
     }
 

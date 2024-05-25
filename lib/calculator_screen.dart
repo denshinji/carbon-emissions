@@ -153,7 +153,7 @@ class _CalculatorScreen extends StatelessWidget {
                               ),
                               LineSeries<Map<String, dynamic>, String>(
                                 dataSource: vm.calculateTableData,
-                                color: Colors.green[900],
+                                color: Colors.red[900],
                                 yAxisName: 'yAxis1',
                                 legendItemText: 'Mitigation',
                                 xValueMapper: (Map<String, dynamic> data, _) =>
@@ -653,7 +653,7 @@ class _CalculatorScreen extends StatelessWidget {
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.ice, _);
                                   } else if (vm.totalSlider >= 1 &&
-                                      _ <= (vm.iceSlider ?? 0)) {
+                                      _ < (vm.iceSlider ?? 0)) {
                                     context
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.ice, _);
@@ -702,7 +702,7 @@ class _CalculatorScreen extends StatelessWidget {
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.hve, _);
                                   } else if (vm.totalSlider >= 1 &&
-                                      _ <= (vm.hveSlider ?? 0)) {
+                                      _ < (vm.hveSlider ?? 0)) {
                                     context
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.hve, _);
@@ -751,7 +751,7 @@ class _CalculatorScreen extends StatelessWidget {
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.phve, _);
                                   } else if (vm.totalSlider >= 1 &&
-                                      _ <= (vm.phveSlider ?? 0)) {
+                                      _ < (vm.phveSlider ?? 0)) {
                                     context
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.phve, _);
@@ -800,7 +800,7 @@ class _CalculatorScreen extends StatelessWidget {
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.bev, _);
                                   } else if (vm.totalSlider >= 1 &&
-                                      _ <= (vm.bevSlider ?? 0)) {
+                                      _ < (vm.bevSlider ?? 0)) {
                                     context
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.bev, _);
@@ -849,7 +849,7 @@ class _CalculatorScreen extends StatelessWidget {
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.fcev, _);
                                   } else if (vm.totalSlider >= 1 &&
-                                      _ <= (vm.fcevSlider ?? 0)) {
+                                      _ < (vm.fcevSlider ?? 0)) {
                                     context
                                         .read<CalculatorProvider>()
                                         .setSlider(SliderType.fcev, _);
