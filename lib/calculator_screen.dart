@@ -64,7 +64,7 @@ class _CalculatorScreen extends StatelessWidget {
                           child: SfCartesianChart(
                             title: ChartTitle(
                               text:
-                                  'ID Goverment Target (flatten on 2030 onward)',
+                                  'ID Goverment Target (Annual Emission flatten on 2030 onward)',
                               textStyle: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w700,
@@ -89,6 +89,9 @@ class _CalculatorScreen extends StatelessWidget {
                             primaryYAxis: const NumericAxis(
                               minimum: 0,
                               enableAutoIntervalOnZooming: true,
+                              title: AxisTitle(
+                                  text: 'Sales Volume',
+                                  alignment: ChartAlignment.center),
                             ),
                             tooltipBehavior: TooltipBehavior(enable: true),
                             legend: Legend(
@@ -201,6 +204,9 @@ class _CalculatorScreen extends StatelessWidget {
                             enableSideBySideSeriesPlacement: true,
                             primaryYAxis: const NumericAxis(
                               minimum: 0,
+                              title: AxisTitle(
+                                  text: 'Sales Volume',
+                                  alignment: ChartAlignment.center),
                               enableAutoIntervalOnZooming: true,
                             ),
                             tooltipBehavior: TooltipBehavior(enable: true),
@@ -318,7 +324,7 @@ class _CalculatorScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'NRE Ratio Increasing\n(max 2.9%)',
+                              'NRE Ratio Increasing\n',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
@@ -334,7 +340,6 @@ class _CalculatorScreen extends StatelessWidget {
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'^(\d+)?\.?\d{0,2}')),
-                                  MaxValueInputFormatter(2.9),
                                 ],
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -362,7 +367,7 @@ class _CalculatorScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'Ethanol hancement per\nyear max (max 3.6%)',
+                              'Ethanol hancement per\nyear',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 12.sp,
@@ -383,7 +388,6 @@ class _CalculatorScreen extends StatelessWidget {
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'^(\d+)?\.?\d{0,2}')),
-                                  MaxValueInputFormatter(3.6),
                                 ],
                                 textAlign: TextAlign.center,
                                 onChanged: (val) {
@@ -1010,215 +1014,238 @@ class _CalculatorScreen extends StatelessWidget {
                               vm.phev == null ||
                               vm.nre == null
                           ? null
-                          : () {
-                              LoadingDialog.runWithLoading(context, () {
-                                return context
-                                    .read<CalculatorProvider>()
-                                    .calculate();
-                              }).then((value) {
-                                if (value) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          child: Wrap(
-                                            children: [
-                                              Center(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    color: Colors.white,
-                                                  ),
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.symmetric(
-                                                    horizontal: 0.25.sw,
-                                                  ),
-                                                  padding: EdgeInsets.all(
-                                                    24.r,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Image.asset(
-                                                        'assets/images/win.png',
-                                                        width: 360,
-                                                        height: 360,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 18.h,
-                                                      ),
-                                                      Text(
-                                                        'CONGRATULATION !!!',
-                                                        style: TextStyle(
-                                                          fontSize: 24.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 14.h,
-                                                      ),
-                                                      Text(
-                                                        'YOU ARE GOOD PRODUCT PLANNER LETS KEEP CONTINUE AND ENJOY THE PROCESS TOWARD CARBON NEUTRAL',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize: 20.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 32.h,
-                                                      ),
-                                                      ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            fixedSize: Size(
-                                                                296.w, 85.h),
-                                                            backgroundColor:
-                                                                AppColors
-                                                                    .primaryColor,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12),
-                                                            ),
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.pushAndRemoveUntil(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder: (_) =>
-                                                                        const OnboardingScreen()),
-                                                                (Route<dynamic>
-                                                                        route) =>
-                                                                    false);
-                                                          },
-                                                          child: Text(
-                                                            'CLOSE',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 32.sp,
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          child: Wrap(
-                                            children: [
-                                              Center(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    color: Colors.white,
-                                                  ),
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.symmetric(
-                                                    horizontal: 0.25.sw,
-                                                  ),
-                                                  padding: EdgeInsets.all(
-                                                    24.r,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Image.asset(
-                                                        'assets/images/failed.png',
-                                                        width: 360,
-                                                        height: 360,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 18.h,
-                                                      ),
-                                                      Text(
-                                                        'EXCUSE ME',
-                                                        style: TextStyle(
-                                                          fontSize: 24.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 14.h,
-                                                      ),
-                                                      Text(
-                                                        'YOU SHOULD BE MORE CHALLENGED IN DEVELOPING YOUR STRATEGY. YOU CAN DISCUSS WITH MARKETING TO BE MORE OPTIMISTIC IN PROMOTING ELECTRIC VEHICLES.AND LET\'S TOGETHER ENCOURAGE OUR GOVERNMENT TO IMMEDIATELY IN MORE ENVIRONMENTALLY FRIENDLY ENERGY READINESS',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize: 20.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 32.h,
-                                                      ),
-                                                      ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            fixedSize: Size(
-                                                                296.w, 85.h),
-                                                            backgroundColor:
-                                                                AppColors
-                                                                    .primaryColor,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12),
-                                                            ),
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Text(
-                                                            'CLOSE',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 32.sp,
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      });
+                          : vm.result == true
+                              ? () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const OnboardingScreen()),
+                                      (Route<dynamic> route) => false);
                                 }
-                              });
-                            },
+                              : () {
+                                  LoadingDialog.runWithLoading(context, () {
+                                    return context
+                                        .read<CalculatorProvider>()
+                                        .calculate();
+                                  }).then((value) {
+                                    if (value) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return Dialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              child: Wrap(
+                                                children: [
+                                                  Center(
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        color: Colors.white,
+                                                      ),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: 0.25.sw,
+                                                      ),
+                                                      padding: EdgeInsets.all(
+                                                        24.r,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Image.asset(
+                                                            'assets/images/win.png',
+                                                            width: 360,
+                                                            height: 360,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 18.h,
+                                                          ),
+                                                          Text(
+                                                            'CONGRATULATION !!!',
+                                                            style: TextStyle(
+                                                              fontSize: 24.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 14.h,
+                                                          ),
+                                                          Text(
+                                                            'YOU ARE GOOD PRODUCT PLANNER LETS KEEP CONTINUE AND ENJOY THE PROCESS TOWARD CARBON NEUTRAL',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              fontSize: 20.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 32.h,
+                                                          ),
+                                                          ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                fixedSize: Size(
+                                                                    296.w,
+                                                                    85.h),
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .primaryColor,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              12),
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Text(
+                                                                'CLOSE',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      32.sp,
+                                                                ),
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return Dialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              child: Wrap(
+                                                children: [
+                                                  Center(
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        color: Colors.white,
+                                                      ),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                        horizontal: 0.25.sw,
+                                                      ),
+                                                      padding: EdgeInsets.all(
+                                                        24.r,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Image.asset(
+                                                            'assets/images/failed.png',
+                                                            width: 360,
+                                                            height: 360,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 18.h,
+                                                          ),
+                                                          Text(
+                                                            'EXCUSE ME',
+                                                            style: TextStyle(
+                                                              fontSize: 24.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 14.h,
+                                                          ),
+                                                          Text(
+                                                            'YOU SHOULD BE MORE CHALLENGED IN DEVELOPING YOUR STRATEGY. YOU CAN DISCUSS WITH MARKETING TO BE MORE OPTIMISTIC IN PROMOTING ELECTRIC VEHICLES.AND LET\'S TOGETHER ENCOURAGE OUR GOVERNMENT TO IMMEDIATELY IN MORE ENVIRONMENTALLY FRIENDLY ENERGY READINESS',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              fontSize: 20.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 32.h,
+                                                          ),
+                                                          ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                fixedSize: Size(
+                                                                    296.w,
+                                                                    85.h),
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .primaryColor,
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              12),
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Text(
+                                                                'CLOSE',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      32.sp,
+                                                                ),
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    }
+                                  });
+                                },
                       child: Text(
-                        'CALCULATE',
+                        vm.result == null || vm.result == false
+                            ? 'CALCULATE'
+                            : 'RESTART',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 32.sp,

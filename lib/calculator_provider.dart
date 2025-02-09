@@ -41,6 +41,8 @@ class CalculatorProvider extends ChangeNotifier {
   double? bev;
   double? fcev;
 
+  bool? result;
+
   double totalSlider = 0;
 
   List<int> phveDef = [
@@ -346,8 +348,13 @@ class CalculatorProvider extends ChangeNotifier {
         calculateTableData[6]['aveTTW'] < 119 &&
         calculateTableData[0]['mitigation'] >=
             calculateTableData.last['mitigation']) {
+      result = true;
+      notifyListeners();
       return true;
     } else {
+      result = false;
+
+      notifyListeners();
       return false;
     }
   }
